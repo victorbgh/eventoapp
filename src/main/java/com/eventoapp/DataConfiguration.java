@@ -19,21 +19,25 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class DataConfiguration {
 
-	@Bean
-    public BasicDataSource dataSource() throws URISyntaxException {
-        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+	@Configuration
+	public class MainConfig {
 
-        String username = dbUri.getUserInfo().split(":")[0];
-        String password = dbUri.getUserInfo().split(":")[1];
-        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
+	    @Bean
+	    public BasicDataSource dataSource() throws URISyntaxException {
+	        URI dbUri = new URI(System.getenv("DATABASE_URL"));
 
-        BasicDataSource basicDataSource = new BasicDataSource();
-        basicDataSource.setUrl(dbUrl);
-        basicDataSource.setUsername(username);
-        basicDataSource.setPassword(password);
+	        String username = dbUri.getUserInfo().split(":")[0];
+	        String password = dbUri.getUserInfo().split(":")[1];
+	        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?sslmode=require";
 
-        return basicDataSource;
-    }
+	        BasicDataSource basicDataSource = new BasicDataSource();
+	        basicDataSource.setUrl(dbUrl);
+	        basicDataSource.setUsername(username);
+	        basicDataSource.setPassword(password);
+
+	        return basicDataSource;
+	    }
+	}
 	
 	
 //    @Bean(name = "dataSourceEvento")
